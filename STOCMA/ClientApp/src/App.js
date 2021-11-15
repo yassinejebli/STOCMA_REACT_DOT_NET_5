@@ -187,7 +187,7 @@ const Routes = () => {
         {isAdmin && <Route path="/tarif" component={Tarif} />}
         {isAdmin && <Route path="/liste-tarif" component={TarifList} />}
 
-        {canManageArticles && <Route path="/ArticleList" component={ArticleList} />}
+        {!canManageArticles && <Route path="/ArticleList" component={ArticleList} />}
         {canManageArticles && <Route path="/_ArticleList" component={FakeArticleList} />}
         {canManageSites && siteModule?.Enabled && <Route path="/SiteList" component={SiteList} />}
         {isAdmin && articleMarginModule?.Enabled && <Route path="/marge-articles" component={ArticlesMarginList} />}

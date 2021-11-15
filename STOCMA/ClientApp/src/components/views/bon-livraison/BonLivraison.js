@@ -227,10 +227,10 @@ const BonLivraison = () => {
                     setClient(response.Client);
                     setDate(response.Date);
                     setNote(response.Note);
-                    setData([...response.BonLivraisonItems?.sort((a,b)=>b.Index - a.Index)?.map(x => ({
+                    setData([...response.BonLivraisonItems?.sort((a, b) => b.Index - a.Index)?.map(x => ({
                         Article: {
                             ...x.Article,
-                            QteStock: x.Article.ArticleSites?.find(y=>y.IdSite === siteId)?.QteStock
+                            QteStock: x.Article.ArticleSites?.find(y => y.IdSite === siteId)?.QteStock
                         },
                         Qte: x.Qte,
                         Pu: x.Pu,
@@ -254,7 +254,7 @@ const BonLivraison = () => {
                     setData(response.DevisItems?.map(x => ({
                         Article: {
                             ...x.Article,
-                            QteStock: x.Article.ArticleSites?.find(y=>y.IdSite === siteId)?.QteStock
+                            QteStock: x.Article.ArticleSites?.find(y => y.IdSite === siteId)?.QteStock
                         },
                         Qte: x.Qte,
                         Pu: x.Pu,
@@ -366,10 +366,16 @@ const BonLivraison = () => {
         let response = isEditMode ? await updateData(DOCUMENT, preparedData, Id, expand)
             : await saveData(DOCUMENT, preparedData, expand);
         setLoading(false);
+        console.log({ response })
 
         if (isEditMode && response.ok) {
-            response = await response.json()
+            response = await response.json();
         }
+
+        //if (!isEditMode)
+        //    response = response.value;
+
+        //console.log("after", { response })
 
         if (response?.Id) {
             setSavedDocument(response)
@@ -417,10 +423,10 @@ const BonLivraison = () => {
 
     return (
         <>
-        {result}
-        <div id="quagga">
-             
-        </div>
+            {result}
+            <div id="quagga">
+
+            </div>
             {barcodeModule?.Enabled && <BarcodeReader
                 onError={console.error}
                 onScan={async (result) => {

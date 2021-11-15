@@ -43,7 +43,7 @@ namespace STOCMA.Models
         {
             get
             {
-                return this.ArticleSites.Sum(x => x.QteStock);
+                return this.ArticleSites != null ? this.ArticleSites.Sum(x => x.QteStock) : 0;
             }
         }
 

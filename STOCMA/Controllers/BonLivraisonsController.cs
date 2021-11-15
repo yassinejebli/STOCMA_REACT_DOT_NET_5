@@ -72,7 +72,7 @@ namespace STOCMA.Controllers
             bonLivraison.Note = newBonLivraison.Note;
             bonLivraison.IdTypePaiement = newBonLivraison.IdTypePaiement;
             bonLivraison.WithDiscount = newBonLivraison.WithDiscount;
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
 
             bonLivraison.NumBon = numBonGenerator.getNumDocByCompany(newBonLivraison.Ref - 1, newBonLivraison.Date);
             foreach (var bi in newBonLivraison.BonLivraisonItems)
@@ -152,16 +152,16 @@ namespace STOCMA.Controllers
                 throw;
             }
 
-            var bonLivraisonWithItems = db.BonLivraisons.Where(x => x.Id == bonLivraison.Id);
+            var bonLivraisonWithItems = db.BonLivraisons.First(x => x.Id == bonLivraison.Id);
             return Ok(bonLivraisonWithItems);
         }
 
         [EnableQuery]
-        public async Task<IActionResult> Post([FromBody]  BonLivraison bonLivraison)
+        public async Task<IActionResult> Post([FromBody] BonLivraison bonLivraison)
         {
             if (!this.ModelState.IsValid)
                 return BadRequest(this.ModelState);
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             var currentYear = DateTime.Now.Year;
             var lastDoc = db.BonLivraisons.Where(x => x.Date.Year == currentYear).OrderByDescending(x => x.Ref).FirstOrDefault();
             var lastRef = lastDoc != null ? lastDoc.Ref : 0;
@@ -243,7 +243,7 @@ namespace STOCMA.Controllers
                     return (IActionResult)this.Conflict();
                 throw;
             }
-            var bonLivraisonWithItems = db.BonLivraisons.Where(x => x.Id == bonLivraison.Id);
+            var bonLivraisonWithItems = db.BonLivraisons.First(x => x.Id == bonLivraison.Id);
             return Ok(bonLivraisonWithItems);
         }
 

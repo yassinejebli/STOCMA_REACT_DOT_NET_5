@@ -89,7 +89,7 @@ namespace STOCMA.Controllers
         }
 
         // POST: odata/Articles
-        public IActionResult Post(Article article, float QteStock, int IdSite = 1)
+        public IActionResult Post([FromBody] Article article, float QteStock, int IdSite = 1)
         {
             if (!ModelState.IsValid)
             {

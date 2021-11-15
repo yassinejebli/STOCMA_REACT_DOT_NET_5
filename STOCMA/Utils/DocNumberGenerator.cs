@@ -6,11 +6,15 @@ namespace STOCMA.Utils
 {
     public class DocNumberGenerator
     {
-        public readonly ApplicationDbContext db;
+        private readonly ApplicationDbContext db;
+        public DocNumberGenerator(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
         public string getNumDocByCompany(int lastRef, DateTime date)
         {
             var company = db.Companies.FirstOrDefault();
-            var companyName = company.Name.ToUpper();
+            var companyName = company.Name;
 
             var newRef = lastRef + 1;
 

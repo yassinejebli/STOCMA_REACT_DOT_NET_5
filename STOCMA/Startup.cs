@@ -35,7 +35,7 @@ namespace STOCMA
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<ODataQueryStringFixer>();
-
+            services.AddHttpContextAccessor();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
@@ -120,11 +120,18 @@ namespace STOCMA
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Setting>("Settings");
+            builder.EntitySet<Site>("Sites");
+            builder.EntitySet<ArticleSite>("ArticleSites");
             builder.EntitySet<Article>("Articles");
+            builder.EntitySet<Categorie>("Categories");
             builder.EntitySet<Client>("Clients");
             builder.EntitySet<Fournisseur>("Fournisseurs");
             builder.EntitySet<BonLivraison>("BonLivraisons");
             builder.EntitySet<BonLivraisonItem>("BonLivraisonItems");
+            builder.EntitySet<ApplicationUser>("ApplicationUsers");
+            builder.EntitySet<TypePaiement>("TypePaiements");
+            builder.EntitySet<Paiement>("Paiements");
+            builder.EntitySet<PaiementF>("PaiementFs");
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(Client)).AddProperty(typeof(Client).GetProperty("Solde"));
             builder.StructuralTypes.First(t => t.ClrType == typeof(Client)).AddProperty(typeof(Client).GetProperty("SoldeFacture"));

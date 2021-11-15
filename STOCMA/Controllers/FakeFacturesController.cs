@@ -60,9 +60,9 @@ namespace STOCMA.Controllers
             fakeFacture.ClientName = newFakeFacture.ClientName;
             fakeFacture.ClientICE = newFakeFacture.ClientICE;
 
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
 
-            fakeFacture.NumBon = numBonGenerator.getNumDocByCompany(newFakeFacture.Ref - 1, newFakeFacture.Date);
+            fakeFacture.NumBon = numBonGenerator.getNumDocByCompany( newFakeFacture.Ref - 1, newFakeFacture.Date);
 
             //----------------------------------------------Updating QteStock
             foreach (var fiOld in fakeFacture.FakeFactureItems)
@@ -100,12 +100,12 @@ namespace STOCMA.Controllers
                 return (IActionResult)this.BadRequest(this.ModelState);
 
 
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             var currentYear = DateTime.Now.Year;
             var lastDoc = db.FakeFactures.Where(x => x.Date.Year == currentYear).OrderByDescending(x => x.Ref).FirstOrDefault();
             var lastRef = lastDoc != null ? lastDoc.Ref : 0;
             fakeFacture.Ref = lastRef + 1;
-            fakeFacture.NumBon = numBonGenerator.getNumDocByCompany(lastRef, fakeFacture.Date);
+            fakeFacture.NumBon = numBonGenerator.getNumDocByCompany( lastRef, fakeFacture.Date);
             //-------------------------------------------updating QteStock
             foreach (var fi in fakeFacture.FakeFactureItems)
             {

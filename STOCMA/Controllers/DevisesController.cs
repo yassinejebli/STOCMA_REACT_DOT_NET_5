@@ -60,7 +60,7 @@ namespace STOCMA.Controllers
             devis.ValiditeOffre = newDevis.ValiditeOffre;
             devis.TransportExpedition = newDevis.TransportExpedition;
             devis.DelaiLivrasion = newDevis.DelaiLivrasion;
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
 
             devis.NumBon = numBonGenerator.getNumDocByCompany(newDevis.Ref - 1, newDevis.Date);
             try
@@ -83,7 +83,7 @@ namespace STOCMA.Controllers
             if (!this.ModelState.IsValid)
                 return (IActionResult)this.BadRequest(this.ModelState);
 
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             var currentYear = DateTime.Now.Year;
             var lastDoc = db.Devises.Where(x => x.Date.Year == currentYear && x.IdSite == devis.IdSite).OrderByDescending(x => x.Ref).FirstOrDefault();
             var lastRef = lastDoc != null ? lastDoc.Ref : 0;

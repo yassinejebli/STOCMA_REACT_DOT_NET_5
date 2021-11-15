@@ -70,7 +70,7 @@ namespace STOCMA.Controllers
             bonAvoirC.Ref = newBonAvoiC.Ref;
             bonAvoirC.IdSite = newBonAvoiC.IdSite;
             bonAvoirC.Note = newBonAvoiC.Note;
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             bonAvoirC.NumBon = numBonGenerator.getNumDocByCompany(newBonAvoiC.Ref - 1, newBonAvoiC.Date);
             foreach (var bi in newBonAvoiC.BonAvoirCItems)
             {
@@ -182,7 +182,7 @@ namespace STOCMA.Controllers
             if (!this.ModelState.IsValid)
                 return (IActionResult)this.BadRequest(this.ModelState);
 
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             var currentYear = DateTime.Now.Year;
             var lastDoc = db.BonAvoirCs.Where(x => x.Date.Year == currentYear).OrderByDescending(x => x.Ref).FirstOrDefault();
             var lastRef = lastDoc != null ? lastDoc.Ref : 0;

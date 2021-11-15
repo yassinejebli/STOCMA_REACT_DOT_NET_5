@@ -19,7 +19,6 @@ namespace STOCMA.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
-        //conventionModelBuilder.EntitySet<ApplicationUser>("ApplicationUsers");
 
 
         public DbSet<Company> Companies { get; set; }

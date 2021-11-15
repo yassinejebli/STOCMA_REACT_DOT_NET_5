@@ -58,7 +58,7 @@ namespace STOCMA.Controllers
             facture.Comment = newFacture.Comment;
             facture.DateEcheance = newFacture.DateEcheance;
             facture.ClientName = newFacture.ClientName;
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
 
             facture.NumBon = numBonGenerator.getNumDocByCompany(newFacture.Ref - 1, newFacture.Date);
 
@@ -133,7 +133,7 @@ namespace STOCMA.Controllers
             var originalBonLivraisons = db.BonLivraisons.Where(x => bonLivraisonIDs.Contains(x.Id));
             await originalBonLivraisons.ForEachAsync(x => x.IdFacture = facture.Id);
             facture.BonLivraisons = null;
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             var currentYear = DateTime.Now.Year;
             var lastDoc = db.Factures.Where(x => x.Date.Year == currentYear && x.IdSite == facture.IdSite).OrderByDescending(x => x.Ref).FirstOrDefault();
             var lastRef = lastDoc != null ? lastDoc.Ref : 0;

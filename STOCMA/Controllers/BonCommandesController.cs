@@ -53,7 +53,7 @@ namespace STOCMA.Controllers
             bonCommande.Ref = newBonCommande.Ref;
             bonCommande.Note = newBonCommande.Note;
 
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
 
             bonCommande.NumBon = numBonGenerator.getNumDocByCompany(bonCommande.Ref - 1, newBonCommande.Date);
             try
@@ -76,7 +76,7 @@ namespace STOCMA.Controllers
             if (!this.ModelState.IsValid)
                 return (IActionResult)this.BadRequest(this.ModelState);
 
-            var numBonGenerator = new DocNumberGenerator();
+            var numBonGenerator = new DocNumberGenerator(db);
             var currentYear = DateTime.Now.Year;
             var lastDoc = db.BonCommandes.Where(x => x.Date.Year == currentYear).OrderByDescending(x => x.Ref).FirstOrDefault();
             var lastRef = lastDoc != null ? lastDoc.Ref : 0;

@@ -18,6 +18,8 @@ namespace STOCMA.Models
         public string PaymentOption { get; set; }
         public string User { get; set; }
         public string BCNumber { get; set; }
+        public string Owner { get; set; }
+        public float Balance { get; set; }
 
         public PersonInfo Person { get; set; } = new PersonInfo();
         public List<DocumentItem> Items { get; set; } = new List<DocumentItem>();
@@ -32,12 +34,13 @@ namespace STOCMA.Models
     public class DocumentItem
     {
         public string Unity { get; set; }
-        public int Index { get; set; }
         public string Ref { get; set; }
         public string Name { get; set; }
         public float Qte { get; set; }
         public float PU { get; set; }
-        public float TVA { get; set; }
+        public float? TVA { get; set; } = 20;
+        public float? Discount { get; set; } = 0;
+        public int? Index { get; set; } = 0;
 
         public DocumentItem() { }
     }
@@ -58,6 +61,7 @@ namespace STOCMA.Models
     {
         public bool? ShowPrices { get; set; } = true;
         public bool? ShowStamp { get; set; } = false;
+        public bool? ShowBalance { get; set; } = false;
 
         public Parameters() { }
     }

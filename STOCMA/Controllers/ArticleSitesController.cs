@@ -27,7 +27,7 @@ namespace STOCMA.Controllers
         [EnableQuery(EnsureStableOrdering = false)]
         public IQueryable<ArticleSite> GetArticleSites()
         {
-            return db.ArticleSites.OrderByDescending(x => x.Counter);
+            return db.ArticleSites.Include(x => x.Article).Include(x => x.Site).OrderByDescending(x => x.Counter);
         }
 
         // GET: odata/ArticleSites(5)

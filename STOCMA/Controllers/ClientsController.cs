@@ -29,14 +29,14 @@ namespace STOCMA.Controllers
         [EnableQuery(EnsureStableOrdering = false)]
         public IQueryable<Client> GetClients()
         {
-            return db.Clients.OrderBy(x => x.Disabled).ThenBy(x => x.Name);
+            return db.Clients.Include(x => x.Paiements).Include(x => x.PaiementFactures).OrderBy(x => x.Disabled).ThenBy(x => x.Name);
         }
 
         // GET: odata/Clients(5)
         [EnableQuery]
         public SingleResult<Client> GetClient([FromODataUri] Guid key)
         {
-            return SingleResult.Create(db.Clients.Where(client => client.Id == key));
+            return SingleResult.Create(db.Clients.Include(x => x.Paiements).Include(x => x.PaiementFactures).Where(client => client.Id == key));
         }
 
         // PUT: odata/Clients(5)

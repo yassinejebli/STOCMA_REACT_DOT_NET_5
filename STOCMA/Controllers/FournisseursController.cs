@@ -29,13 +29,13 @@ namespace STOCMA.Controllers
         [EnableQuery(EnsureStableOrdering = false)]
         public IQueryable<Fournisseur> GetFournisseurs()
         {
-            return (IQueryable<Fournisseur>)this.db.Fournisseurs.OrderBy(x => new { x.Disabled, x.Name });
+            return this.db.Fournisseurs.Include(x => x.PaiementFs).Include(x => x.PaiementFactureFs).OrderBy(x => x.Disabled).ThenBy(x => x.Name);
         }
 
         [EnableQuery]
         public SingleResult<Fournisseur> GetFournisseur([FromODataUri] Guid key)
         {
-            return SingleResult.Create<Fournisseur>(this.db.Fournisseurs.Where<Fournisseur>((Expression<Func<Fournisseur, bool>>)(fournisseur => fournisseur.Id == key)));
+            return SingleResult.Create<Fournisseur>(this.db.Fournisseurs.Include(x => x.PaiementFs).Include(x => x.PaiementFactureFs).Where<Fournisseur>((Expression<Func<Fournisseur, bool>>)(fournisseur => fournisseur.Id == key)));
         }
 
         public async Task<IActionResult> Put([FromODataUri] Guid key, Delta<Fournisseur> patch)

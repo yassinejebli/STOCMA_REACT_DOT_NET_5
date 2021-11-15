@@ -24,14 +24,13 @@ namespace STOCMA.Controllers
             this.db = db;
         }
 
-        public ActionResult Document(Guid documentId, string documentName, bool? showPrices, bool? showStamp, bool? isMiniDocument = false)
+        public ActionResult Document(Guid documentId, string documentName, bool? showPrices, bool? showStamp, bool? showBalance = false, bool? isMiniDocument = false)
         {
             Document document = new Document();
             switch (documentName)
             {
                 case "BonLivraisons":
-                    var _document = db.BonLivraisons.Where(x => x.Id == documentId).FirstOrDefault();
-                    var _client = db.Clients.First(x => x.Id == _document.IdClient);
+                    var _document = db.BonLivraisons.Include(x => x.Client).ThenInclude(x => x.Paiements).Where(x => x.Id == documentId).FirstOrDefault();
                     document = new Document
                     {
                         DocumentName = "Bon de livraison",
@@ -39,13 +38,15 @@ namespace STOCMA.Controllers
                         Number = _document.NumBon,
                         PaymentOption = _document.TypePaiement != null ? _document.TypePaiement.Name : "",
                         User = _document.User,
+                        Owner = "Client",
+                        Balance = _document.Client.Solde,
                         Person =
                         {
-                            Address = _client.Adresse,
-                            Email = _client.Email,
-                            ICE = _client.ICE,
-                            Name = _client.Name,
-                            Phone = _client.Tel
+                            Address = _document.Client.Adresse,
+                            Email = _document.Client.Email,
+                            ICE = _document.Client.ICE,
+                            Name = _document.Client.Name,
+                            Phone = _document.Client.Tel
                         },
                         Items = db.BonLivraisonItems.Where(x => x.IdBonLivraison == documentId).Select(x => new DocumentItem
                         {
@@ -53,9 +54,9 @@ namespace STOCMA.Controllers
                             PU = x.Pu,
                             Ref = x.Article.Ref,
                             Qte = x.Qte,
-                            TVA = x.Article.TVA ?? 20,
+                            TVA = x.Article.TVA,
                             Unity = x.Article.Unite,
-                            Index = x.Index ?? 0
+                            Index = x.Index
                         }).ToList(),
                     };
                     break;
@@ -68,7 +69,7 @@ namespace STOCMA.Controllers
             }
             IDocument printDocument;
             if (isMiniDocument == true)
-                printDocument = new PrintMiniDocument(document, new Parameters { ShowPrices = showPrices, ShowStamp = showStamp });
+                printDocument = new PrintMiniDocument(document, new Parameters { ShowPrices = showPrices, ShowStamp = showStamp, ShowBalance = showBalance });
             else
                 printDocument = new PrintDocument(document);
 

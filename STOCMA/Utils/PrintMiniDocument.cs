@@ -74,7 +74,7 @@ namespace STOCMA.Utils
 
                 column.Item().PaddingTop(-20).Box().Border(1).Width(280).MinHeight(36).Row(row =>
                 {
-                    row.RelativeColumn().Component(new AddressComponent("Client", Model.Person));
+                    row.RelativeColumn().Component(new AddressComponent(Model.Owner, Model.Person));
                     //row.ConstantColumn(50);
                     //row.RelativeColumn().Component(new AddressComponent("For", Model.CustomerAddress));
                 });
@@ -88,6 +88,9 @@ namespace STOCMA.Utils
                     column.Item().PaddingTop(20).PaddingRight(5).AlignRight().Text("Total: ***.** DH", TextStyle.Default.Bold().Size(11));
 
                 column.Item().PaddingTop(10).Text($"Nombre d'articles: {Model.Items.Count()}", TextStyle.Default.Bold().Size(11));
+                if (Parameters.ShowBalance == true)
+                    column.Item().PaddingTop(8).Text($"Solde: {Model.Balance.ToString("0.00")} DH", TextStyle.Default.Bold().Size(11));
+
                 if (!string.IsNullOrWhiteSpace(Model.Comments))
                     column.Item().PaddingTop(10).Element(ComposeComments);
             });
@@ -116,9 +119,8 @@ namespace STOCMA.Utils
                     {
                         foreach (var item in Model.Items)
                         {
-                            column.Item().ShowEntire().Background(Model.Items.IndexOf(item) % 2 == 0 ? Colors.Grey.Lighten5 : Colors.Transparent).BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5).PaddingHorizontal(3).Row(row =>
+                            column.Item().ShowEntire().Background(Model.Items.IndexOf(item) % 2 == 0 ? Colors.Transparent : Colors.Grey.Lighten5).BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5).PaddingHorizontal(3).Row(row =>
                             {
-                                //row.ConstantColumn(25).Text(Model.Items.IndexOf(item) + 1);
                                 row.RelativeColumn(3).Text(item.Name.ToUpper());
 
                                 row.RelativeColumn().AlignRight().Text(item.Qte.ToString("0.00"));

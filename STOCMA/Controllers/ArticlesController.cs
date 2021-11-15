@@ -30,7 +30,7 @@ namespace STOCMA.Controllers
         [EnableQuery(EnsureStableOrdering = false)]
         public IQueryable<Article> GetArticles()
         {
-            return db.Articles.OrderBy(x => x.Description);
+            return db.Articles.Include(x => x.ArticleSites).OrderBy(x => x.Description);
         }
 
         [EnableQuery]

@@ -19,7 +19,7 @@ import { removeUser } from '../../../queries/utilisateurQueries'
 
 const TABLE = 'ApplicationUsers';
 
-const EXPAND = ['Claims'];
+const EXPAND = [];
 
 const UtilisateurList = () => {
     const { showSnackBar } = useSnackBar();
@@ -88,8 +88,7 @@ const UtilisateurList = () => {
         const response = await removeUser({
             userId: id
         });
-        console.log({ response });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

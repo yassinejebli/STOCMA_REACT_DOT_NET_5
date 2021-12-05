@@ -55,7 +55,7 @@ const SiteForm = ({ data, onSuccess }) => {
         setLoading(true);
         if (editMode) {
             const response = await updateData(TABLE, formState, formState.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
                 if (onSuccess) onSuccess();

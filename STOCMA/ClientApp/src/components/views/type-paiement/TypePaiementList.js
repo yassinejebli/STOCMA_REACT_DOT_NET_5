@@ -49,11 +49,11 @@ const TypePaiementList = () => {
     )
     const [showTypePaiementModal, hideTypePaiementModal] = useModal(({ in: open, onExited }) => (
         <SideDialogWrapper open={open} onExited={onExited} onClose={hideTypePaiementModal}>
-            <TypePaiementForm 
-                onSuccess={()=>{
+            <TypePaiementForm
+                onSuccess={() => {
                     refetchData();
                 }}
-             />
+            />
         </SideDialogWrapper>
     ), [filters]);
     const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
@@ -77,13 +77,12 @@ const TypePaiementList = () => {
         }).catch((err) => {
             console.log({ err });
         })
-    },[filters])
+    }, [filters])
 
     const deleteRow = React.useCallback(async (id) => {
         setLoading(true);
         const response = await deleteData(TABLE, id);
-        console.log({ response });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

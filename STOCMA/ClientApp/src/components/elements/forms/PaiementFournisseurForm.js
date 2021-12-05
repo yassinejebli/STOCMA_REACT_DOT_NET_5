@@ -79,7 +79,7 @@ const PaiementFournisseurForm = ({ document, amount, paiement, onSuccess, isAvoi
 
         if (isEditMode) {
             const response = await updateData(TABLE, { ...preparedData, Id: paiement.Id }, paiement.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
                 if (onSuccess) onSuccess();

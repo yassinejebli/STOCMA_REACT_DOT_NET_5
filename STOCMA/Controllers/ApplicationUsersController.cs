@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ using STOCMA.Models;
 
 namespace STOCMA.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize]
     public class ApplicationUsersController : ODataController
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -28,10 +29,19 @@ namespace STOCMA.Controllers
             this.userManager = userManager;
         }
 
+        //var usersWithClaims = userManager.Users.ToList().Select(async x => new { x, claims = await userManager.GetClaimsAsync(x) });
         [EnableQuery]
-        public IQueryable<ApplicationUser> GetApplicationUsers()
+        public IQueryable<CustomApplicationUser> GetApplicationUsers()
         {
-            return userManager.Users.ToList().AsQueryable();
+            var usersWithClaims = userManager.Users.ToList().Select(x => new
+           CustomApplicationUser
+            {
+                Id = x.Id,
+                UserName = x.UserName,
+                Claims = userManager.GetClaimsAsync(x).Result.ToList()
+            }).AsQueryable();
+
+            return usersWithClaims;
         }
 
         [EnableQuery]
@@ -66,7 +76,7 @@ namespace STOCMA.Controllers
             return (IActionResult)this.Updated<ApplicationUser>(applicationUser);
         }
 
-        public async Task<IActionResult> Post([FromBody]  ApplicationUser applicationUser)
+        public async Task<IActionResult> Post([FromBody] ApplicationUser applicationUser)
         {
             if (!this.ModelState.IsValid)
                 return (IActionResult)this.BadRequest(this.ModelState);
@@ -118,4 +128,12 @@ namespace STOCMA.Controllers
             return this.userManager.Users.Count<ApplicationUser>((Expression<Func<ApplicationUser, bool>>)(e => e.Id == key.ToString())) > 0;
         }
     }
+
+    public class CustomApplicationUser
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public IList<Claim> Claims { get; set; } = new List<Claim>();
+    }
+
 }

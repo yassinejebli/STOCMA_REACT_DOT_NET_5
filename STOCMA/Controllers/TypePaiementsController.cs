@@ -105,7 +105,7 @@ namespace STOCMA.Controllers
             if (async == null)
                 return (IActionResult)this.NotFound();
             this.db.TypePaiements.Remove(async);
-            int num = await this.db.SaveChangesAsync();
+            await this.db.SaveChangesAsync();
             return (IActionResult)this.NoContent();
         }
 

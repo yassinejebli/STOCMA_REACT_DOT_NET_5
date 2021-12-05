@@ -33,7 +33,7 @@ const ArticleCategoriesForm = ({ data, onSuccess }) => {
         setFormErrors(_errors);
         return Object.keys(_errors).length === 0;
     }
-    console.log({formState})
+    console.log({ formState })
     const save = async () => {
         if (!isFormValid()) return;
 
@@ -43,7 +43,7 @@ const ArticleCategoriesForm = ({ data, onSuccess }) => {
                 Id: formState.Id,
                 Name: formState.Name,
             }, formState.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
                 if (onSuccess) onSuccess();

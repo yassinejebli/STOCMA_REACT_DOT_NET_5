@@ -44,7 +44,6 @@ const AuthProvider = ({ children }) => {
     const [canManageBonAvoirsVente, setCanManageBonAvoirsVente] = React.useState(false);
 
     React.useEffect(() => {
-        return;
         showLoader(true);
         getUserInfo().then(response => {
             const claims = response?.claims;

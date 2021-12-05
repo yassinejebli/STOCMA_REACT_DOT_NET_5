@@ -90,7 +90,7 @@ const FactureList = () => {
         showLoader(true, true)
         const response = await deleteData(DOCUMENT, id);
         console.log({ response });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

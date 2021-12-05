@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Formatter;
@@ -14,6 +15,7 @@ using STOCMA.Models;
 
 namespace STOCMA.Controllers
 {
+    [Authorize]
     public class SettingsController : ODataController
     {
         private readonly ApplicationDbContext db;
@@ -56,7 +58,7 @@ namespace STOCMA.Controllers
             return (IActionResult)this.Updated<Setting>(setting);
         }
 
-        public async Task<IActionResult> Post([FromBody]  Setting setting)
+        public async Task<IActionResult> Post([FromBody] Setting setting)
         {
             if (!this.ModelState.IsValid)
                 return (IActionResult)this.BadRequest(this.ModelState);

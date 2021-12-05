@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box'
+﻿import Box from '@material-ui/core/Box'
 import React from 'react'
 import Paper from '../../elements/misc/Paper'
 import Table from '../../elements/table/Table'
@@ -82,7 +82,7 @@ const BonCommandeList = () => {
     const deleteRow = React.useCallback(async (id) => {
         setLoading(true);
         const response = await deleteData(DOCUMENT, id);
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

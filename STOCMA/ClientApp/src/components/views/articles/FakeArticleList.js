@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box'
+﻿import Box from '@material-ui/core/Box'
 import React from 'react'
 import Paper from '../../elements/misc/Paper'
 import Table from '../../elements/table/Table'
@@ -100,7 +100,7 @@ const FakeArticleList = () => {
     const deleteRow = React.useCallback(async (row) => {
         setLoading(true);
         const response = await deleteData(TABLE, row.Id);
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

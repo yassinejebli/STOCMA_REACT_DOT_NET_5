@@ -89,8 +89,7 @@ const SiteList = () => {
 
         setLoading(true);
         const response = await deleteData(TABLE, id);
-        console.log({ response });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
             fetchSites();

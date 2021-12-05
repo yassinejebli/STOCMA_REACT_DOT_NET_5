@@ -66,7 +66,7 @@ const BankPaiementsClientList = () => {
             ]
         }
     }, [debouncedSearchText, client, dateFrom, dateTo]);
-    
+
     const [showPaiementModal, hidePaiementModal] = useModal(({ in: open, onExited }) => (
         <SideDialogWrapper open={open} onExited={onExited} onClose={hidePaiementModal}>
             {selectedRow && <PaiementClientForm
@@ -140,7 +140,7 @@ const BankPaiementsClientList = () => {
         const response = await partialUpdateData(TABLE, {
             Hide: !document.Hide
         }, document.Id)
-        if (response.ok)
+        if (response)
             showSnackBar();
         else
             showSnackBar({
@@ -184,7 +184,7 @@ const BankPaiementsClientList = () => {
 
     const deleteRow = React.useCallback(async (id) => {
         const response = await deleteData(TABLE, id);
-        if (response.ok) {
+        if (response) {
             showSnackBar();
         } else {
             showSnackBar({

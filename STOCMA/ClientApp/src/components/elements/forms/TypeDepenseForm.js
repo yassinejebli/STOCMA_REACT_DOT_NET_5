@@ -11,16 +11,16 @@ const initialState = {
 }
 const TABLE = 'TypeDepenses';
 
-const TypeDepenseForm = ({data, onSuccess}) => {
+const TypeDepenseForm = ({ data, onSuccess }) => {
     const { showSnackBar } = useSnackBar();
     const editMode = Boolean(data);
     const [formState, setFormState] = React.useState(initialState);
     const [formErrors, setFormErrors] = React.useState({});
     const [loading, setLoading] = React.useState(false);
-    
-    React.useEffect(()=>{
-        if(editMode)
-            setFormState({...data})
+
+    React.useEffect(() => {
+        if (editMode)
+            setFormState({ ...data })
     }, [])
 
     const onFieldChange = ({ target }) => setFormState(_formState => ({ ..._formState, [target.name]: target.value }));
@@ -39,24 +39,24 @@ const TypeDepenseForm = ({data, onSuccess}) => {
         const preparedData = formState;
 
         setLoading(true);
-        if(editMode){
+        if (editMode) {
             const response = await updateData(TABLE, preparedData, preparedData.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
-                if(onSuccess) onSuccess();
+                if (onSuccess) onSuccess();
             } else {
                 showSnackBar({
                     error: true,
                     text: 'Erreur !'
                 });
             }
-        }else{
+        } else {
             const response = await saveData(TABLE, preparedData);
             if (response?.Id) {
                 setFormState({ ...initialState });
                 showSnackBar();
-                if(onSuccess) onSuccess();
+                if (onSuccess) onSuccess();
             } else {
                 showSnackBar({
                     error: true,
@@ -79,7 +79,7 @@ const TypeDepenseForm = ({data, onSuccess}) => {
                 fullWidth
                 margin="normal"
                 onChange={onFieldChange}
-                value={formState.Name||''}
+                value={formState.Name || ''}
                 helperText={formErrors.Name}
                 error={Boolean(formErrors.Name)}
             />

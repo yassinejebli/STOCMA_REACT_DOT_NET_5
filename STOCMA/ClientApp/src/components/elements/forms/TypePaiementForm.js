@@ -37,7 +37,7 @@ const TypePaiementForm = ({ data, onSuccess }) => {
         setFormErrors(_errors);
         return Object.keys(_errors).length === 0;
     }
-    console.log({formState})
+    console.log({ formState })
     const save = async () => {
         if (!isFormValid()) return;
 
@@ -48,7 +48,7 @@ const TypePaiementForm = ({ data, onSuccess }) => {
                 Name: formState.Name,
                 IsDebit: formState.IsDebit,
             }, formState.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
                 if (onSuccess) onSuccess();

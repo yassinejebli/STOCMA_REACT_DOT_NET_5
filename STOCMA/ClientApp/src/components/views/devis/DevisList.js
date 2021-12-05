@@ -93,7 +93,7 @@ const DevisList = () => {
     const deleteRow = React.useCallback(async (id) => {
         const response = await deleteData(DOCUMENT, id);
         showLoader(true, true)
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

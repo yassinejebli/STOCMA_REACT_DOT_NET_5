@@ -14,6 +14,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using System.Linq;
 using STOCMA.Utils;
+using STOCMA.Controllers;
 
 namespace STOCMA
 {
@@ -38,6 +39,7 @@ namespace STOCMA
             services.AddHttpContextAccessor();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddCors();
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -58,6 +60,13 @@ namespace STOCMA
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            //services.AddCors(o => o.AddPolicy("default", builder =>
+            //{
+            //    builder.AllowAnyOrigin()
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader();
+            //}));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -128,10 +137,11 @@ namespace STOCMA
             builder.EntitySet<Fournisseur>("Fournisseurs");
             builder.EntitySet<BonLivraison>("BonLivraisons");
             builder.EntitySet<BonLivraisonItem>("BonLivraisonItems");
-            builder.EntitySet<ApplicationUser>("ApplicationUsers");
+            builder.EntitySet<CustomApplicationUser>("ApplicationUsers");
             builder.EntitySet<TypePaiement>("TypePaiements");
             builder.EntitySet<Paiement>("Paiements");
             builder.EntitySet<PaiementF>("PaiementFs");
+            builder.EntitySet<Company>("Companies");
 
             builder.StructuralTypes.First(t => t.ClrType == typeof(Client)).AddProperty(typeof(Client).GetProperty("Solde"));
             builder.StructuralTypes.First(t => t.ClrType == typeof(Client)).AddProperty(typeof(Client).GetProperty("SoldeFacture"));

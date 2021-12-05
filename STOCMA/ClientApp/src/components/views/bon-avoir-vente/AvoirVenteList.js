@@ -85,7 +85,7 @@ const BonAvoirVenteList = () => {
     const deleteRow = React.useCallback(async (id) => {
         setLoading(true);
         const response = await deleteData(DOCUMENT, id);
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

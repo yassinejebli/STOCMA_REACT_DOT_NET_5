@@ -55,7 +55,7 @@ const BonReceptionList = () => {
     const history = useHistory();
     const fetchIdRef = React.useRef(0);
     const columns = React.useMemo(
-        () => bonReceptionListColumns({barcodeModule}),
+        () => bonReceptionListColumns({ barcodeModule }),
         []
     );
     const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
@@ -89,7 +89,7 @@ const BonReceptionList = () => {
     const deleteRow = React.useCallback(async (id) => {
         setLoading(true);
         const response = await deleteData(DOCUMENT, id);
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {
@@ -131,7 +131,7 @@ const BonReceptionList = () => {
 
     const printEtiquettes = React.useCallback((id) => {
         history.push(`code-barres?BonReceptionId=${id}`)
-    }, []) 
+    }, [])
 
     return (
         <>

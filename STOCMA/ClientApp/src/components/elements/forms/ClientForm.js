@@ -20,17 +20,17 @@ const initialState = {
 }
 const TABLE = 'Clients';
 
-const ClientForm = ({data, onSuccess}) => {
-    const {company} = useSite();
+const ClientForm = ({ data, onSuccess }) => {
+    const { company } = useSite();
     const { showSnackBar } = useSnackBar();
     const editMode = Boolean(data);
     const [formState, setFormState] = React.useState(initialState);
     const [formErrors, setFormErrors] = React.useState({});
     const [loading, setLoading] = React.useState(false);
-    
-    React.useEffect(()=>{
-        if(editMode)
-            setFormState({...data})
+
+    React.useEffect(() => {
+        if (editMode)
+            setFormState({ ...data })
     }, [])
 
     const onFieldChange = ({ target }) => setFormState(_formState => ({ ..._formState, [target.name]: target.value }));
@@ -46,27 +46,27 @@ const ClientForm = ({data, onSuccess}) => {
 
     const save = async () => {
         if (!isFormValid()) return;
-        const {Solde, SoldeFacture, ...preparedData} = formState;
+        const { Solde, SoldeFacture, ...preparedData } = formState;
 
         setLoading(true);
-        if(editMode){
+        if (editMode) {
             const response = await updateData(TABLE, preparedData, preparedData.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
-                if(onSuccess) onSuccess();
+                if (onSuccess) onSuccess();
             } else {
                 showSnackBar({
                     error: true,
                     text: 'Erreur !'
                 });
             }
-        }else{
+        } else {
             const response = await saveData(TABLE, preparedData);
             if (response?.Id) {
                 setFormState({ ...initialState });
                 showSnackBar();
-                if(onSuccess) onSuccess();
+                if (onSuccess) onSuccess();
             } else {
                 showSnackBar({
                     error: true,
@@ -89,11 +89,11 @@ const ClientForm = ({data, onSuccess}) => {
                 fullWidth
                 margin="normal"
                 onChange={onFieldChange}
-                value={formState.Name||''}
+                value={formState.Name || ''}
                 helperText={formErrors.Name}
                 error={Boolean(formErrors.Name)}
             />
-            {company.Name === 'EAS'&&<TextField
+            {company.Name === 'EAS' && <TextField
                 name="CodeClient"
                 label="Code du client"
                 variant="outlined"
@@ -101,7 +101,7 @@ const ClientForm = ({data, onSuccess}) => {
                 fullWidth
                 margin="normal"
                 onChange={onFieldChange}
-                value={formState.CodeClient||''}
+                value={formState.CodeClient || ''}
                 helperText={formErrors.CodeClient}
                 error={Boolean(formErrors.CodeClient)}
             />}
@@ -113,7 +113,7 @@ const ClientForm = ({data, onSuccess}) => {
                 fullWidth
                 margin="normal"
                 onChange={onFieldChange}
-                value={formState.ICE||''}
+                value={formState.ICE || ''}
             />
             <TextField
                 name="Tel"
@@ -123,7 +123,7 @@ const ClientForm = ({data, onSuccess}) => {
                 fullWidth
                 margin="normal"
                 onChange={onFieldChange}
-                value={formState.Tel||''}
+                value={formState.Tel || ''}
             />
             <TextField
                 name="Fax"
@@ -133,7 +133,7 @@ const ClientForm = ({data, onSuccess}) => {
                 fullWidth
                 margin="normal"
                 onChange={onFieldChange}
-                value={formState.Fax||''}
+                value={formState.Fax || ''}
             />
             <TextField
                 name="Plafond"
@@ -158,7 +158,7 @@ const ClientForm = ({data, onSuccess}) => {
                 margin="normal"
                 rows={3}
                 onChange={onFieldChange}
-                value={formState.Adresse||''}
+                value={formState.Adresse || ''}
             />
             <FormControlLabel
                 control={<Switch

@@ -60,7 +60,7 @@ const BonLivraisonList = () => {
     const history = useHistory();
     const fetchIdRef = React.useRef(0);
     const columns = React.useMemo(
-        () => getBonLivraisonListColumns({canUpdateBonLivraisons, canDeleteBonLivraisons, isAdmin}),
+        () => getBonLivraisonListColumns({ canUpdateBonLivraisons, canDeleteBonLivraisons, isAdmin }),
         [canUpdateBonLivraisons, canDeleteBonLivraisons, isAdmin]
     );
     const [showModal, hideModal] = useModal(({ in: open, onExited }) => {
@@ -98,7 +98,7 @@ const BonLivraisonList = () => {
         showLoader(true, true)
         const response = await deleteData(DOCUMENT, id);
         console.log({ response });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

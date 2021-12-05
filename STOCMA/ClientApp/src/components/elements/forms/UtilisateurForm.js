@@ -137,7 +137,7 @@ const UtilisateurForm = ({ data, onSuccess, reftech }) => {
         setLoading(true);
         if (editMode) {
             const response = await updateUtilisateur(preparedData);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar();
                 if (password)
@@ -182,7 +182,7 @@ const UtilisateurForm = ({ data, onSuccess, reftech }) => {
             userId: formState.Id,
             newPassword: password
         });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             if (onSuccess) onSuccess();
         } else {
@@ -200,7 +200,7 @@ const UtilisateurForm = ({ data, onSuccess, reftech }) => {
             claim,
             enabled,
         })).json();
-        if(reftech) reftech()
+        if (reftech) reftech()
         setClaims(_claims => {
             return _claims.map(x => x.id === claim ? { ...x, enabled: response?.userHasClaim } : { ...x });
         })

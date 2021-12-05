@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box'
+﻿import Box from '@material-ui/core/Box'
 import React from 'react'
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { TextField, Button } from '@material-ui/core'
@@ -239,7 +239,7 @@ const PaiementClientList = () => {
 
     const deleteRow = React.useCallback(async (id) => {
         const response = await deleteData(TABLE, id);
-        if (response.ok) {
+        if (response) {
             showSnackBar();
         } else {
             showSnackBar({

@@ -133,7 +133,7 @@ const PaiementClientForm = ({ document, amount, typePaiement, paiement, onSucces
 
         if (isEditMode) {
             const response = await updateData(TABLE, { ...preparedData, Id: paiement.Id, ModificationDate: new Date() }, paiement.Id);
-            if (response.ok) {
+            if (response) {
                 setFormState({ ...initialState });
                 showSnackBar({
                     text: 'Le paiement est bien enregistré'

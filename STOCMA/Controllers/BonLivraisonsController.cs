@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
@@ -16,7 +17,7 @@ using STOCMA.Utils;
 
 namespace STOCMA.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class BonLivraisonsController : ODataController
     {
 

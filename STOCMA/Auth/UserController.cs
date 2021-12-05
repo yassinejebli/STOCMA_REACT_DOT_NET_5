@@ -111,7 +111,8 @@ namespace STOCMA.Auth
         [HttpGet]
         public async Task<ActionResult> GetCurrentUserClaims()
         {
-            var userId = userManager.GetUserId(User);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var currentUser = await userManager.FindByIdAsync(userId);
 
             var claims = User.Claims.Select(x => x.Value);

@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box'
+﻿import Box from '@material-ui/core/Box'
 import React from 'react'
 import Paper from '../../elements/misc/Paper'
 import Table from '../../elements/table/Table'
@@ -79,7 +79,7 @@ const ArticleCategoriesList = () => {
         setLoading(true);
         const response = await deleteData(TABLE, id);
         console.log({ response });
-        if (response.ok) {
+        if (response) {
             showSnackBar();
             refetchData();
         } else {

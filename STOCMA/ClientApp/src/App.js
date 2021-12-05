@@ -121,7 +121,8 @@ const Routes = () => {
 
     return <>
         {canViewDashboard && <Route exact path="/" component={Dashboard} />}
-        {isAdmin && utilisateursModule?.Enabled && <Route path="/liste-des-utilisateurs" component={UtilisateurList} />}
+        {/*isAdmin && utilisateursModule?.Enabled && <Route path="/liste-des-utilisateurs" component={UtilisateurList} />*/}
+        <Route path="/liste-des-utilisateurs" component={UtilisateurList} />
         {isAdmin && rapportVenteModule?.Enabled && <Route path="/rapports-des-ventes" component={Rapports} />}
 
         {

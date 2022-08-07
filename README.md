@@ -1,3 +1,6 @@
+# The old version (Created with ASP.NET)
+https://github.com/yassinejebli/stocma-stock-billing-system
+
 # STOCMA_REACT_DOT_NET_5
 Stock management system
 
